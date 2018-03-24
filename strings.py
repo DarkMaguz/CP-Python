@@ -4,7 +4,7 @@ firstStr = "This is a string of text."
 
 print(firstStr)
 
-secondStr = "This is another sting."
+secondStr = "This is another string."
 
 print(firstStr + secondStr)
 
