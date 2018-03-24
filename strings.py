@@ -2,10 +2,19 @@
 
 firstStr = "This is a string of text."
 
-print(myStr)
+print(firstStr)
 
 secondStr = "This is another sting."
 
-print(myStr + secondStr)
+print(firstStr + secondStr)
 
-print(myStr + " " + secondStr)
+print(firstStr + " " + secondStr)
+
+thirdStr = firstStr + " " + secondStr
+print(thirdStr)
+
+strLength = len(thirdStr)
+
+print("thirdStr has %d characters." % strLength)
+
+
