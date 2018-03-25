@@ -13,7 +13,7 @@ print(2 * 3)
 # Introduce the concept integer numbers and floating point numbers.  
 print(8 / 5)
 
-# Introducing vriables...
+# Introducing variables...
 
 x = 10
 print(x)
@@ -24,5 +24,5 @@ y = 5
 print(x * y)
 print(x - y)
 
-# At this point we will introduce an error by calling a variable that has not been defined yet ie 'k'.
-# Explain the output caused by the error and how it can be usefull to debug a program
+# At this point we will introduce an error by calling a variable that has not been defined yet IE 'k'.
+# Explain the output caused by the error and how it can be useful to debug a program
