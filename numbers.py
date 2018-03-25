@@ -19,6 +19,8 @@ x = 10
 print(x)
 
 y = 5
+
+# We can apply arithmetic operations to our variables.  
 print(x * y)
 print(x - y)
 
