@@ -15,7 +15,7 @@ def encrypt(text, key):
 	for char in text:
 		charIndex = charList.index(char)
 		charIndex += key
-		if charIndex > maxLen:
+		while charIndex > maxLen:
 			charIndex -= maxLen
 		eText += charList[charIndex]
 	return eText
@@ -25,7 +25,7 @@ def decrypt(text, key):
 	for char in text:
 		charIndex = charList.index(char)
 		charIndex -= key
-		if charIndex > maxLen:
+		while charIndex > maxLen:
 			charIndex += maxLen
 		dText += charList[charIndex]
 	return dText
