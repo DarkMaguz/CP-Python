@@ -10,11 +10,10 @@ Suggested order of introduction:
 
 The tutorial folder contains another approach introducing python. (_Mostly in Danish though_)
 
+---
+
 Some other things of interest:
-CryptoFun (Intermediary: _lists_)
-
-PyGames (Intermediary)
-
-wedriver (Intermediary)
-
-cs1.3 (Advanced: _Requires extra files and Linux running Xorg **not** Wayland_)
+* CryptoFun (Intermediary: _lists_)
+* PyGames (Intermediary)
+* wedriver (Intermediary)
+* cs1.3 (Advanced: _Requires extra files and Linux running Xorg **not** Wayland_)
