@@ -1,3 +1,4 @@
 python-xlib>=0.29
 colormath>=3.0.0
 python-libxdo>=0.1.2a1
+Pillow>=9.1.0
