@@ -42,11 +42,22 @@ driver.implicitly_wait(10)
 # Navigate to the application home page.
 driver.get('https://orteil.dashnet.org/cookieclicker/')
 
-# Wait 5 seconds for the page to finish loading.
-time.sleep(5)
+# Wait 2 seconds for the page to finish loading.
+time.sleep(2)
 
-# Find the cookie and click it.
-driver.find_element(By.XPATH, '//div[@id="bigCookie"]').click()
+# Accept cookies and chose English as language.
+driver.find_element(By.XPATH, '/html/body/div[1]/div/a[1]').click()
+driver.find_element(By.XPATH, '//div[@id="langSelect-EN"]').click()
+
+# Wait 2 seconds for the page to finish loading.
+time.sleep(3)
+
+bigCookie = driver.find_element(By.XPATH, '//button[@id="bigCookie"]')
+cookieCounter = driver.find_element(By.XPATH, '//div[@id="cookies"]')
+
+for i in range(10):
+  # Find the cookie and click it.
+  bigCookie.click()
 
 # Wait 5 seconds.
 time.sleep(5)
