@@ -1,49 +1,16 @@
-import os
-import sys
-import time
-import pprint
-pp = pprint.PrettyPrinter(indent=2)
-
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.firefox.service import Service
-
-from selenium.webdriver.remote import webelement
-
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-# Add path of the geckodriver to PATH.
-os.environ['PATH'] += os.pathsep + 'bin/'
-
-# Update Firefox and geckodriver.
-os.system('check_for_updates.sh')
-
-# Set option for headless.
-options = Options()
-options.binary_location = 'bin/firefox/firefox-bin'
-options.add_argument('--private-window')
-#options.add_argument('-headless')
-
-service = Service('bin/geckodriver')
-
-# Create a new Firefox session.
-driver = webdriver.Firefox(service=service, options=options)
-
-# Uncomment the next line to maximize the browser window.
-#driver.maximize_window()
-
-# Give the browser time to load before each command is executed.
-driver.implicitly_wait(10)
+from coockieClickerUtils import *
+# import threading
 
 # Navigate to the application home page.
 driver.get('https://orteil.dashnet.org/cookieclicker/')
 
+load()
+
 # Wait 2 seconds for the page to finish loading.
 time.sleep(2)
+
+# Load a script to speed up clicking.
+hackCoockie()
 
 # Accept cookies and chose English as language.
 driver.find_element(By.XPATH, '/html/body/div[1]/div/a[1]').click()
@@ -54,30 +21,60 @@ time.sleep(3)
 
 bigCookie = driver.find_element(By.XPATH, '//button[@id="bigCookie"]')
 cookieCounter = driver.find_element(By.XPATH, '//div[@id="cookies"]')
+goldenCookie = driver.find_element(By.XPATH, '//div[@id="goldenCookie"]')
+shimmers = driver.find_element(By.XPATH, '//div[@id="shimmers"]')
+# upgradeStore = driver.find_element(By.XPATH, '//div[@id="upgrades"]')
 
 def cookieCount():
   text = cookieCounter.text
-  print('text:', text)
-  return text.split(' ')[0]
+  # print('text:', text)
+  return text
 
 def buyUpgrades():
-  pass
+  upgrades = list()
+  try:
+    for i in range(200):
+      upgrade = driver.find_element(By.XPATH, '//*[@id="upgrade{}"]'.format(i))
+      upgrades.append(upgrade)
+  except Exception as e:
+    pass
+  upgrades.reverse()
+  for upgrade in upgrades:
+    classes = upgrade.get_attribute("class")
+    if "enabled" in classes:
+      upgrade.click()
+      return
 
 def buyBuildings():
-  product = driver.find_element(By.XPATH, '//div[@id="product0"]')
-  classes = product.get_attribute("class")
-  if "enabled" in classes:
-    product.click()
+  for i in range(18, 0, -1):
+    product = driver.find_element(By.XPATH, '//div[@id="product{}"]'.format(i))
+    classes = product.get_attribute("class")
+    if "enabled" in classes:
+      product.click()
+      return
 
-while True:
-  for i in range(10):
-    # Find the cookie and click it.
-    bigCookie.click()
-  print(cookieCount())
-  buyBuildings()
+def everyMinut():
+  # while True:
+  for i in range(5):
+    time.sleep(120)
+    save()
+    buyUpgrades()
+    buyBuildings()
+    print(cookieCount())
 
-# Wait 5 seconds.
-time.sleep(5)
+minutThread = threading.Thread(target=everyMinut)
+minutThread.start()
+
+# for i in range(5000):
+while minutThread.is_alive():
+  bigCookie.click()
+
+minutThread.join()
+save()
+
+# while True:
+#   buyUpgrades()
+#   time.sleep(5)
 
 # Close the browser window.
 driver.quit()
