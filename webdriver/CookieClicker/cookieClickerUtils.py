@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import pprint
+import threading
 pp = pprint.PrettyPrinter(indent=2)
 
 from selenium import webdriver
@@ -24,11 +25,11 @@ os.system('check_for_updates.sh')
 
 # Set option for headless.
 options = Options()
-options.binary_location = 'bin/firefox/firefox-bin'
+options.binary_location = '../bin/firefox/firefox-bin'
 options.add_argument('--private-window')
-#options.add_argument('-headless')
+# options.add_argument('-headless')
 
-service = Service('bin/geckodriver')
+service = Service('../bin/geckodriver')
 
 # Create a new Firefox session.
 driver = webdriver.Firefox(service=service, options=options)
@@ -39,28 +40,32 @@ driver = webdriver.Firefox(service=service, options=options)
 # Give the browser time to load before each command is executed.
 driver.implicitly_wait(10)
 
-# Navigate to the application home page.
-driver.get('https://orteil.dashnet.org/cookieclicker/')
+def load():
+  with open('savedGame.txt', 'r') as file:
+    data = file.read().strip()
+    driver.execute_script("window.localStorage.setItem('CookieClickerGame', '{}');".format(data))
 
-# Wait 2 seconds for the page to finish loading.
-time.sleep(2)
+def save():
+  data = driver.execute_script("return window.localStorage.getItem('CookieClickerGame');")
+  with open('savedGame.txt', 'w') as file:
+    file.write(data)
 
-# Accept cookies and chose English as language.
-driver.find_element(By.XPATH, '/html/body/div[1]/div/a[1]').click()
-driver.find_element(By.XPATH, '//div[@id="langSelect-EN"]').click()
-
-# Wait 2 seconds for the page to finish loading.
-time.sleep(3)
-
-bigCookie = driver.find_element(By.XPATH, '//button[@id="bigCookie"]')
-cookieCounter = driver.find_element(By.XPATH, '//div[@id="cookies"]')
-
-for i in range(10):
-  # Find the cookie and click it.
-  bigCookie.click()
-
-# Wait 5 seconds.
-time.sleep(5)
-
-# Close the browser window.
-driver.quit()
+def hackCoockie():
+  driver.execute_script('''
+  document.getElementById('bigCookie').setAttribute('target', '_blank');
+  ''')
+#
+# clickHackScript = ""
+# with open('clickHack.js', 'r') as file:
+#   clickHackScript = file.read().strip()
+#
+#
+# def clickHack(clicks=50):
+#   pass
+  # threads = list()
+  # for i in range(clicks):
+  #   x = threading.Thread(target=driver.execute_script, args=(clickHackScript,))
+  #   threads.append(x)
+  #   x.start()
+  # for t in threads:
+  #   t.join()

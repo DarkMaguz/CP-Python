@@ -1,4 +1,4 @@
-from coockieClickerUtils import *
+from cookieClickerUtils import *
 # import threading
 
 # Navigate to the application home page.
