@@ -18,7 +18,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 # Add path of the geckodriver to PATH.
-os.environ['PATH'] += os.pathsep + 'bin/'
+os.environ['PATH'] += os.pathsep + '../bin/'
 
 # Update Firefox and geckodriver.
 os.system('check_for_updates.sh')
