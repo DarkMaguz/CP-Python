@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-  challange01.py
+  challenge01.py
 
     Created on: Mar 29, 2025
         Author: Peter "Magnus" Balling
